@@ -1,5 +1,5 @@
 <template>
-<div class="row">
+<div id="explorer" class="row" v-on:outdated="fetchFiles">
     <div class="col-md-12">
         <table class="table">
             <caption>{{ path }}</caption>
@@ -10,7 +10,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="file in sortedFiles">
+                <tr v-for="file in files | orderByFilename">
                     <td>
                         <div class="file" v-if="file.type === 'file'">
                             <i class="fa fa-file-o"></i>
@@ -51,29 +51,10 @@ export default {
       required: true
     }
   },
-  computed: {
-    sortedFiles() {
-      return this.files.slice(0).sort((a,b) => {
-        if (a.type !== b.type) {
-          if (a.type === 'dir') {
-            return -1;
-          } else {
-            return 1;
-          }
-        } else {
-          if (a.name < b.name) {
-            return -1;
-          } else {
-            return 1;
-          }
-        }
-      });
-    }
-  },
   methods: {
     fetchFiles() {
       this.$http
-        .get(`http://api.github.com/repos/${this.username}/${this.repo}/contents${this.path}`)
+        .get(`https://api.github.com/repos/${this.username}/${this.repo}/contents${this.path}`)
         .then(response => {
           this.files = response.data;
         })
@@ -88,8 +69,8 @@ export default {
       this.fetchFiles();
     }
   },
-  created() {
-    if(this.username && this.repo) {
+  events: {
+    outdated() {
       this.fetchFiles();
     }
   }

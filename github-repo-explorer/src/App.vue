@@ -10,7 +10,7 @@
             </div>
             <input type="submit" class="btn btn-default" value="Get repo filesystem!">
           </form>
-          <explorer :username="username" :repo="repo"></explorer>
+          <explorer v-ref:explorer :username="username" :repo="repo"></explorer>
         </div>
       </div>
     </div>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import Explorer from './Explorer.vue'
+import { Explorer } from './components'
 
 export default {
   data () {
@@ -31,6 +31,7 @@ export default {
   methods: {
     changeRepo() {
       [ this.username, this.repo ] = this.fullRepoName.split('/');
+      this.$refs.explorer.$emit('outdated');
     }
   },
   components: {
