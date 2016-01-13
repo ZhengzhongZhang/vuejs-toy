@@ -32,7 +32,7 @@ export default {
     changeRepo() {
       [ this.username, this.repo ] = this.fullRepoName.split('/');
 
-      // send oudated event after dom is updated
+      // send oudated event after explorer componenet's props is updated
       this.$nextTick(() => {
         this.$refs.explorer.$emit('outdated');
       });
