@@ -1,5 +1,5 @@
 <template>
-<div id="explorer" class="row" v-on:outdated="fetchFiles">
+<div class="row">
     <div class="col-md-12">
         <table class="table">
             <caption>{{ path }}</caption>
@@ -18,7 +18,7 @@
                         </div>
                         <div class="directory" v-if="file.type === 'dir'">
                             <i class="fa fa-folder-o"></i>
-                            <a @click="changePath(file.path)">{{ file.name }}</a>
+                            <a @click="goTo(file.path)">{{ file.name }}</a>
                         </div>
                     </td>
                     <td class="text-right">
@@ -35,12 +35,10 @@
 
 <script>
 export default {
-  data() {
-    return {
-      path: '/',
-      files: []
-    }
-  },
+  data: () => ({
+    path: '/',
+    files: []
+  }),
   props: {
     username: {
       type: String,
@@ -59,7 +57,7 @@ export default {
           this.files = response.data;
         })
     },
-    changePath(path) {
+    goTo(path) {
       this.path = '/'+path;
       this.fetchFiles();
     },

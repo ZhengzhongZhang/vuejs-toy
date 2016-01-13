@@ -31,7 +31,11 @@ export default {
   methods: {
     changeRepo() {
       [ this.username, this.repo ] = this.fullRepoName.split('/');
-      this.$refs.explorer.$emit('outdated');
+
+      // send oudated event after dom is updated
+      this.$nextTick(() => {
+        this.$refs.explorer.$emit('outdated');
+      });
     }
   },
   components: {

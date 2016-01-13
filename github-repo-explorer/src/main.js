@@ -5,9 +5,7 @@ import App from './App.vue'
 import { orderByFilename } from './filters'
 
 Vue.use(VueResource);
-
 Vue.filter('orderByFilename', orderByFilename);
-
 Vue.config.debug = true;
 
 new Vue({
