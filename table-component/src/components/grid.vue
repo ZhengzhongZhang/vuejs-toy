@@ -20,7 +20,8 @@
         <tr v-for="
           entry in data
           | filterBy filterKey in columns
-          | orderBy sortKey sortOrders[sortKey]">
+          | orderBy sortKey sortOrders[sortKey]"
+            transition="table-row">
           <td v-for="key in columns">
             {{entry[key]}}
           </td>
@@ -111,5 +112,9 @@ export default {
   }
   th.active .arrow {
     opacity: 1;
+  }
+  .table-row-enter, .table-row-leave {
+    transition: all 0.3s ease;
+    opacity: 0;
   }
 </style>
